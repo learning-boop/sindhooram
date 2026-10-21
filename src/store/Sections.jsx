@@ -163,7 +163,7 @@ export function SindoorEdit({ onShop }) {
 /* Best sellers bento. A white "View" disc follows the pointer over each tile. */
 const TILES = [
   { title: 'Embroidered Sarees', line: 'Grace in every drape', image: IMG.embroidered, area: 'a', tone: 'light' },
-  { title: 'Sindoor Silks', line: 'Reds for every beginning', image: IMG.redJasmine, area: 'b', filter: 'red' },
+  { title: 'Sindoor Silks', line: 'Reds for every beginning', image: IMG.sindoorFullRiver, area: 'b', filter: 'red' },
   { title: 'Kalakaari Collection', line: 'Stories, painted by hand', image: IMG.kalakaariSeated, area: 'c' },
   { title: 'Handloom Ivory', line: 'Quiet, everyday luxury', image: IMG.archIvoryDetail, area: 'd' },
   { title: 'Bridal Kanjeevaram', line: 'For the wedding morning', image: IMG.archBridalDetail, area: 'e' },

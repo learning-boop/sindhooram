@@ -27,9 +27,6 @@ import sindoorFullMaroon from '../assets/site/red/sindoor-full-maroon.jpg';
 import sindoorFullWine from '../assets/site/red/sindoor-full-wine.jpg';
 import sindoorFullRiver from '../assets/site/red/sindoor-full-river.jpg';
 import sindoorFullIvory from '../assets/site/red/sindoor-full-ivory.jpg';
-import redJasmine from '../assets/site/red/red-jasmine.jpg';
-import redJasmineGarland from '../assets/site/red/red-jasmine-garland.jpg';
-import redJasmineEvening from '../assets/site/red/red-jasmine-evening.jpg';
 import redSilkGaze from '../assets/site/red/red-silk-gaze.jpg';
 import redRiverDusk from '../assets/site/red/red-river-dusk.jpg';
 import redIvoryTemple from '../assets/site/red/red-ivory-temple.jpg';
@@ -39,7 +36,7 @@ import jasmineBack from '../assets/store/jasmine-back.jpg';
 export const IMG = {
   heroWoman, archIvory, archBlush, archBridal, embroidered, embroideredDetail,
   womenCard, kalakaariWindow, kalakaariSeated, kalamkariDrape, kalamkariDrapeDetail,
-  archBlushDetail, archBridalDetail, archIvoryDetail, redJasmine, redSilkGaze,
+  archBlushDetail, archBridalDetail, archIvoryDetail, sindoorFullRiver, redSilkGaze,
 };
 
 /* CONFIG.showDresses: false hides every dress product, menu, tab and card until dress photos are ready. */
@@ -93,21 +90,9 @@ const ALL_PRODUCTS = [
     collection: 'Sindoor Edit',
     red: true,
     price: 11900,
-    images: [sindoorFullWine, redJasmineEvening],
+    images: [sindoorFullWine],
     description: 'Wine and black soft silk with a wide copper-gold border, for lamp-lit evenings.',
     details: ['Soft silk', '6.3 m including blouse piece', 'Dry clean only'],
-  },
-  {
-    id: 'sindoor-jasmine-silk',
-    name: 'Sindoor Jasmine Silk',
-    type: 'saree',
-    collection: 'Sindoor Edit',
-    red: true,
-    price: 13900,
-    tag: 'Bestseller',
-    images: [redJasmine, redJasmineGarland],
-    description: 'Vermillion silk with a fine gold border, made for evenings with jasmine in your hair.',
-    details: ['Pure silk · zari border', '6.3 m including blouse piece', 'Dry clean only'],
   },
   {
     id: 'ivory-zari-kasavu',
