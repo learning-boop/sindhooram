@@ -53,7 +53,6 @@ export function Explore({ onShop }) {
   return (
     <section className="explore" id="explore">
       <div className="explore__band">
-        <img src={IMG.exploreWall} alt="" loading="lazy" data-parallax="0.08" />
         <Leaves className="leaves--soft" />
         <Head eyebrow="Discover" title="Explore the Collection" line="Timeless traditions. Modern stories." />
       </div>
@@ -148,7 +147,7 @@ export function SindoorEdit({ onShop }) {
           <button type="button" className="rcard" key={p.id} onClick={() => openQuickView(p)} data-reveal="clip" style={{ '--d': `${i * 0.12}s` }}>
             <span className="rcard__img">
               <img src={p.images[0]} alt={p.name} loading="lazy" />
-              <img src={p.images[1]} alt="" loading="lazy" className="rcard__alt" />
+              {p.images[1] && <img src={p.images[1]} alt="" loading="lazy" className="rcard__alt" />}
             </span>
             <span className="rcard__copy">
               <strong>{p.name}</strong>

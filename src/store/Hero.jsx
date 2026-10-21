@@ -1,12 +1,22 @@
 import { useEffect, useRef } from 'react';
-import { IMG } from './data';
+import { useMediaQuery } from '../hooks/useMediaQuery';
+import heroLandscape from '../assets/hero-landscape.mp4';
+import heroPortrait from '../assets/hero-portrait.mp4';
+import landscapePoster from '../assets/hero-landscape-poster.jpg';
+import portraitPoster from '../assets/hero-portrait-poster.jpg';
 import { Rise } from './Motion';
 import { ArrowIcon } from './Icons';
 
-/* The hero: the green room with crimson curtains. Copy rises in once the curtain opens;
-   on scroll the photo drifts and the copy lifts away. */
+/* The hero: the Sindhooram film plays full-bleed (the wide cut on desktop, the tall cut on phones).
+   Copy rises in once the curtain opens; on scroll the film drifts and the copy lifts away. */
+const LOOP_END = 7.6; // seconds
+
 export default function Hero({ onShop, ready, reduced }) {
+  const isPortrait = useMediaQuery('(max-aspect-ratio: 4/5)');
+  const film = isPortrait ? { src: heroPortrait, poster: portraitPoster } : { src: heroLandscape, poster: landscapePoster };
   const media = useRef(null);
+  // Both films end on the logo card, which would sit under the hero title, so only the saree footage loops.
+  const trimLoop = (e) => { if (e.currentTarget.currentTime > LOOP_END) e.currentTarget.currentTime = 0; };
   const copy = useRef(null);
 
   useEffect(() => {
@@ -29,7 +39,8 @@ export default function Hero({ onShop, ready, reduced }) {
   return (
     <section className={`hero${ready ? ' is-ready' : ''}`} id="top">
       <div className="hero__media" ref={media}>
-        <img src={IMG.hero} alt="A woman in an ivory silk saree seated in a green room framed by crimson curtains" />
+        <video key={film.src} src={film.src} poster={film.poster} autoPlay={!reduced} muted loop playsInline preload="auto" onTimeUpdate={trimLoop}
+          aria-label="A woman in a red Banarasi saree on a carved balcony over the river at sunset" />
       </div>
       <div className="hero__shade" />
       <div className="hero__copy" ref={copy}>

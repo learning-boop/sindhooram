@@ -1,13 +1,12 @@
 /* ======================= THE CATALOGUE =======================
    Add, remove or edit products here. Every product needs a unique `id`.
    `type` is 'saree' or 'dress' (drives the filter tabs and the size picker).
-   `images` = [main, hover]. Photos live in src/assets/site/; import new ones below.
+   `images` = [main] or [main, hover]: every photo should show the saree itself.
+   Photos live in src/assets/site/; import new ones below.
    Dresses stay hidden until CONFIG.showDresses is true (see config.js).
    ============================================================= */
 import { CONFIG } from '../config';
-import hero from '../assets/site/hero.jpg';
 import heroWoman from '../assets/site/hero-woman.jpg';
-import exploreWall from '../assets/site/explore-wall.jpg';
 import archIvory from '../assets/site/arch-ivory.jpg';
 import archIvoryDetail from '../assets/site/arch-ivory-detail.jpg';
 import archBlush from '../assets/site/arch-blush.jpg';
@@ -24,23 +23,21 @@ import kalakaariSeated from '../assets/site/kalakaari-seated.jpg';
 import kalakaariSeatedDetail from '../assets/site/kalakaari-seated-detail.jpg';
 import kalamkariDrape from '../assets/site/kalamkari-drape.jpg';
 import kalamkariDrapeDetail from '../assets/site/kalamkari-drape-detail.jpg';
+import sindoorFullMaroon from '../assets/site/red/sindoor-full-maroon.jpg';
+import sindoorFullWine from '../assets/site/red/sindoor-full-wine.jpg';
+import sindoorFullRiver from '../assets/site/red/sindoor-full-river.jpg';
+import sindoorFullIvory from '../assets/site/red/sindoor-full-ivory.jpg';
 import redJasmine from '../assets/site/red/red-jasmine.jpg';
 import redJasmineGarland from '../assets/site/red/red-jasmine-garland.jpg';
 import redJasmineEvening from '../assets/site/red/red-jasmine-evening.jpg';
 import redSilkGaze from '../assets/site/red/red-silk-gaze.jpg';
-import redSilkPortrait from '../assets/site/red/red-silk-portrait.jpg';
 import redRiverDusk from '../assets/site/red/red-river-dusk.jpg';
-import redLamps from '../assets/site/red/red-lamps.jpg';
 import redIvoryTemple from '../assets/site/red/red-ivory-temple.jpg';
-import redIvoryGold from '../assets/site/red/red-ivory-gold.jpg';
-import maroonLamps from '../assets/site/red/maroon-lamps.jpg';
-import templePond from '../assets/store/temple-pond.jpg';
 import overShoulder from '../assets/store/over-shoulder.jpg';
 import jasmineBack from '../assets/store/jasmine-back.jpg';
-import portraitSmile from '../assets/store/portrait-smile.jpg';
 
 export const IMG = {
-  hero, heroWoman, exploreWall, archIvory, archBlush, archBridal, embroidered, embroideredDetail,
+  heroWoman, archIvory, archBlush, archBridal, embroidered, embroideredDetail,
   womenCard, kalakaariWindow, kalakaariSeated, kalamkariDrape, kalamkariDrapeDetail,
   archBlushDetail, archBridalDetail, archIvoryDetail, redJasmine, redSilkGaze,
 };
@@ -54,18 +51,6 @@ export const DRESS_SIZES = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
 const ALL_PRODUCTS = [
   /* The Sindoor Edit: red sarees modelled by the Sindhooram face (`red: true` puts them in that section and tab) */
   {
-    id: 'sindoor-jasmine-silk',
-    name: 'Sindoor Jasmine Silk',
-    type: 'saree',
-    collection: 'Sindoor Edit',
-    red: true,
-    price: 13900,
-    tag: 'Bestseller',
-    images: [redJasmine, redJasmineGarland],
-    description: 'Vermillion silk with a fine gold border, made for evenings with jasmine in your hair.',
-    details: ['Pure silk · zari border', '6.3 m including blouse piece', 'Dry clean only'],
-  },
-  {
     id: 'rajamahal-red-banarasi',
     name: 'Rajamahal Red Banarasi',
     type: 'saree',
@@ -73,8 +58,8 @@ const ALL_PRODUCTS = [
     red: true,
     price: 16500,
     compareAt: 18900,
-    images: [redSilkGaze, redSilkPortrait],
-    description: 'Deep red katan silk with a woven gold pallu, rich enough for a wedding and light enough to dance in.',
+    images: [sindoorFullMaroon, redSilkGaze],
+    description: 'Deep maroon-red katan silk with a woven gold pallu, rich enough for a wedding and light enough to dance in.',
     details: ['Katan silk · zari pallu', '6.3 m including blouse piece', 'Dry clean only'],
   },
   {
@@ -85,7 +70,7 @@ const ALL_PRODUCTS = [
     red: true,
     price: 21800,
     tag: 'Bridal',
-    images: [redRiverDusk, redLamps],
+    images: [sindoorFullRiver, redRiverDusk],
     description: 'Red Kanjeevaram silk with gold buttis and a broad temple border, woven for the brightest days.',
     details: ['Pure silk · real zari', '6.3 m including blouse piece', 'Dry clean only'],
   },
@@ -97,7 +82,7 @@ const ALL_PRODUCTS = [
     red: true,
     price: 15400,
     tag: 'New',
-    images: [redIvoryTemple, redIvoryGold],
+    images: [sindoorFullIvory, redIvoryTemple],
     description: 'An ivory body with a vermillion and gold pallu, the classic pairing for a temple morning.',
     details: ['Pattu silk · zari border', '6.3 m including blouse piece', 'Dry clean only'],
   },
@@ -108,9 +93,21 @@ const ALL_PRODUCTS = [
     collection: 'Sindoor Edit',
     red: true,
     price: 11900,
-    images: [redJasmineEvening, maroonLamps],
-    description: 'Wine-red soft silk with a quiet gold edge, for lamp-lit evenings.',
+    images: [sindoorFullWine, redJasmineEvening],
+    description: 'Wine and black soft silk with a wide copper-gold border, for lamp-lit evenings.',
     details: ['Soft silk', '6.3 m including blouse piece', 'Dry clean only'],
+  },
+  {
+    id: 'sindoor-jasmine-silk',
+    name: 'Sindoor Jasmine Silk',
+    type: 'saree',
+    collection: 'Sindoor Edit',
+    red: true,
+    price: 13900,
+    tag: 'Bestseller',
+    images: [redJasmine, redJasmineGarland],
+    description: 'Vermillion silk with a fine gold border, made for evenings with jasmine in your hair.',
+    details: ['Pure silk · zari border', '6.3 m including blouse piece', 'Dry clean only'],
   },
   {
     id: 'ivory-zari-kasavu',
@@ -205,7 +202,7 @@ const ALL_PRODUCTS = [
     type: 'saree',
     collection: 'Kanjeevaram',
     price: 12400,
-    images: [overShoulder, templePond],
+    images: [overShoulder, jasmineBack],
     description: 'Navy and rust pattu silk with a contrast korvai border, made for mornings at the temple.',
     details: ['Pattu silk', '6.3 m including blouse piece', 'Dry clean only'],
   },
@@ -226,7 +223,7 @@ const ALL_PRODUCTS = [
     type: 'dress',
     collection: 'Kurta Sets',
     price: 4800,
-    images: [portraitSmile, templePond],
+    images: [overShoulder, jasmineBack],
     description: 'Straight kurta with zari buttis, matching pants and a sheer organza dupatta.',
     details: ['Silk blend', 'Kurta + pants + dupatta', 'Dry clean only'],
   },

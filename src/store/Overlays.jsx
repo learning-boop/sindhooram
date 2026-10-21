@@ -58,13 +58,13 @@ function QuickViewPanel({ p, close }) {
         <button className="icon-btn qv__close" type="button" onClick={close} aria-label="Close"><CloseIcon size={22} /></button>
         <div className="qv__gallery">
           <img src={p.images[img]} alt={p.name} key={img} />
-          <div className="qv__thumbs">
+          {p.images.length > 1 && <div className="qv__thumbs">
             {p.images.map((src, i) => (
               <button type="button" key={src} className={i === img ? 'is-active' : ''} onClick={() => setImg(i)} aria-label={`Photo ${i + 1}`}>
                 <img src={src} alt="" />
               </button>
             ))}
-          </div>
+          </div>}
         </div>
         <div className="qv__info">
           <p className="eyebrow eyebrow--dark">{p.collection}</p>

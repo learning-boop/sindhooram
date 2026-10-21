@@ -23,7 +23,7 @@ export function ProductCard({ product, index = 0 }) {
       <div className="card__media">
         <button type="button" className="card__open" onClick={() => openQuickView(product)} aria-label={`Quick view ${product.name}`}>
           <img src={product.images[0]} alt={product.name} loading="lazy" />
-          <img src={product.images[1]} alt="" loading="lazy" className="card__alt" />
+          {product.images[1] && <img src={product.images[1]} alt="" loading="lazy" className="card__alt" />}
         </button>
         {(product.tag || off > 0) && (
           <span className={`card__tag${off ? ' card__tag--sale' : ''}`}>{off ? `${off}% off` : product.tag}</span>
