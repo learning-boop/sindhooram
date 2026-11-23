@@ -1,0 +1,4 @@
+# Classic (npm-style) node_modules layout. The panels' production build (Vite/Rollup) needs
+# packages like i18next to be resolvable from the hoisted node_modules folder.
+[install]
+linker = "hoisted"

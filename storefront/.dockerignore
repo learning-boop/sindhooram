@@ -1,0 +1,9 @@
+# Not sent to Docker when it builds the storefront image
+node_modules
+.next
+.vercel
+.env
+.env.local
+.env.*.local
+*.log
+.DS_Store

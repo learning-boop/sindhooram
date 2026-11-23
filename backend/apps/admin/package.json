@@ -1,0 +1,24 @@
+{
+  "name": "@sindhooram/admin",
+  "private": true,
+  "version": "2.4.1",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --port 7000",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview --port 7000"
+  },
+  "dependencies": {
+    "@medusajs/icons": "2.22.3",
+    "@medusajs/ui": "4.2.3",
+    "@mercurjs/admin": "2.4.1",
+    "@mercurjs/dashboard-sdk": "2.4.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "7.18.1"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.1"
+  }
+}

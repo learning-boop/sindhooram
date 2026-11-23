@@ -7,10 +7,28 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Dependencies and builds
 node_modules
 dist
 dist-ssr
+.next
+.turbo
+.medusa
+out
+build
 *.local
+*.tsbuildinfo
+
+# Environment files (secrets) — keep the *.example / *.template files
+.env
+.env.*
+!.env.example
+!.env.template
+.vercel
+
+# Backend uploads saved on local disk
+backend/packages/api/static
+backend/packages/api/uploads
 
 # Editor directories and files
 .vscode/*

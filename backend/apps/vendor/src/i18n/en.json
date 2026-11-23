@@ -1,0 +1,12 @@
+{
+  "customFields": {
+    "title": "Custom Fields",
+    "description": "Manage your custom fields and configurations",
+    "noFields": "No custom fields configured yet"
+  },
+  "products": {
+    "create": {
+      "requestSuccessToast": "Product sent to the owner for approval. Once approved, it appears on the website with your price and stock."
+    }
+  }
+}

@@ -1,0 +1,43 @@
+# Render Blueprint for the Sindhooram backend: the marketplace API, the owner panel (/dashboard)
+# and the vendor panel (/seller). Free plan, Singapore. Database: Neon. Storefront: Vercel.
+#
+# Only three values are typed in by hand, once, in a Render environment group named
+# "sindhooram-secrets" (Render → Environment Groups → New Environment Group):
+#   DATABASE_URL          Neon → project "sindhooram" → Connect → connection string (pooling off)
+#   SEED_ADMIN_PASSWORD   password for the owner login admin@sindhooram.com
+#   SEED_VENDOR_PASSWORD  password for the three demo vendor logins
+# The backend reads its own address from RENDER_EXTERNAL_URL; CORS and photo links follow from it
+# and from STOREFRONT_URL (see backend/packages/api/medusa-config.ts).
+services:
+  - type: web
+    name: sindhooram-backend
+    runtime: node
+    # free: sleeps after 15 min without visits (the next visit waits about a minute) and has 512 MB RAM.
+    # For real customers move to a paid plan; Mercur recommends 2 GB per instance.
+    plan: free
+    region: singapore
+    branch: marketplace
+    rootDir: backend
+    # Builds the API and both panels, then updates the database tables and adds the demo data once
+    # (the free plan has no pre-deploy step, so this runs at the end of the build).
+    buildCommand: npm install -g bun@1.3.11 && NODE_ENV=development bun install --frozen-lockfile && bun run build:ci && npm run db:setup
+    # The heap limit keeps the server inside the free plan's 512 MB; drop it on a bigger plan.
+    startCommand: NODE_OPTIONS=--max-old-space-size=320 npm run start:server
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: "24"
+      - key: NODE_ENV
+        value: production
+      - key: MERCUR_DISABLE_TELEMETRY
+        value: "true"
+      # The storefront on Vercel. Product photos are served from there.
+      - key: STOREFRONT_URL
+        value: https://sindhooram-store.vercel.app
+      - key: JWT_SECRET
+        generateValue: true
+      - key: COOKIE_SECRET
+        generateValue: true
+      # DATABASE_URL, SEED_ADMIN_PASSWORD and SEED_VENDOR_PASSWORD (see the top of this file)
+      - fromGroup: sindhooram-secrets

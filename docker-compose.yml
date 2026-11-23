@@ -1,0 +1,106 @@
+# Sindhooram marketplace on your Mac with Docker Desktop. From this folder:
+#
+#   docker compose up --build        first time (about 10 minutes), or after code changes
+#   docker compose up                next times
+#   docker compose down              stop (your data is kept)
+#   docker compose down -v           stop and wipe the database, uploads and key (fresh demo next time)
+#
+#   Shop           http://localhost:3000
+#   Owner panel    http://localhost:9000/dashboard   admin@sindhooram.com / Sindhooram@123
+#   Vendor panel   http://localhost:9000/seller      kanchi@example.com / Vendor@123
+#                  (also banaras@example.com, kalakaari@example.com)
+#
+# These settings are for your own computer only. The public demo (Render + Neon + Vercel) uses
+# its own settings, see README.md.
+
+name: sindhooram
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: sindhooram
+      POSTGRES_PASSWORD: sindhooram
+      POSTGRES_DB: sindhooram
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      # Open the database from your Mac (TablePlus, psql) on port 5433:
+      # postgres://sindhooram:sindhooram@localhost:5433/sindhooram
+      - "5433:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sindhooram -d sindhooram"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+  backend:
+    build:
+      context: ./backend
+      args:
+        # The address your browser uses for the backend; built into the two panels.
+        MERCUR_BACKEND_URL: http://localhost:9000
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      # sslmode=disable: the local database container has no SSL (Neon does, so leave it off there)
+      DATABASE_URL: postgres://sindhooram:sindhooram@postgres:5432/sindhooram?sslmode=disable
+      JWT_SECRET: docker-local-jwt-secret
+      COOKIE_SECRET: docker-local-cookie-secret
+      STORE_CORS: http://localhost:3000
+      ADMIN_CORS: http://localhost:9000
+      VENDOR_CORS: http://localhost:9000
+      AUTH_CORS: http://localhost:3000,http://localhost:9000
+      MERCUR_BACKEND_URL: http://localhost:9000
+      FILE_BACKEND_URL: http://localhost:9000/static
+      MERCUR_VENDOR_URL: http://localhost:9000/seller
+      # Demo product photos are served by the storefront
+      STOREFRONT_URL: http://localhost:3000
+      # The backend tells the storefront to refresh when products, prices or stock change
+      STOREFRONT_REVALIDATE_URL: http://storefront:3000/api/revalidate
+      STOREFRONT_REVALIDATE_SECRET: docker-local-revalidate-secret
+      # Where the backend leaves the storefront key for the storefront container
+      PUBLISHABLE_KEY_FILE: /shared/publishable_key
+      COMMISSION_PERCENT: "10"
+      SEED_ADMIN_EMAIL: admin@sindhooram.com
+      SEED_ADMIN_PASSWORD: Sindhooram@123
+      SEED_VENDOR_PASSWORD: Vendor@123
+    volumes:
+      - shared:/shared
+      # Photos vendors upload in the vendor panel
+      - uploads:/app/packages/api/.medusa/server/static
+    ports:
+      - "9000:9000"
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://localhost:9000/health').then(r=>process.exit(r.ok?0:1),()=>process.exit(1))"]
+      interval: 10s
+      timeout: 5s
+      start_period: 60s
+      retries: 60
+
+  storefront:
+    build: ./storefront
+    depends_on:
+      backend:
+        condition: service_healthy
+    environment:
+      MEDUSA_BACKEND_URL: http://backend:9000
+      MEDUSA_PUBLISHABLE_KEY_FILE: /shared/publishable_key
+      NEXT_PUBLIC_SITE_URL: http://localhost:3000
+      NEXT_PUBLIC_SITE_MODE: store
+      NEXT_PUBLIC_SHOW_DRESSES: "false"
+      NEXT_PUBLIC_VENDOR_PANEL_URL: http://localhost:9000/seller
+      REVALIDATE_SECRET: docker-local-revalidate-secret
+      # Optional: WhatsApp number with country code (e.g. 919876543210) and Instagram handle
+      NEXT_PUBLIC_WHATSAPP: ""
+      NEXT_PUBLIC_INSTAGRAM: ""
+    volumes:
+      - shared:/shared:ro
+    ports:
+      - "3000:3000"
+
+volumes:
+  pgdata:
+  shared:
+  uploads:

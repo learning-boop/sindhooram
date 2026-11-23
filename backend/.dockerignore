@@ -1,0 +1,11 @@
+# Not sent to Docker when it builds the backend image
+**/node_modules
+**/.medusa
+**/.turbo
+**/dist
+**/.env
+**/.env.local
+**/.DS_Store
+**/*.log
+packages/api/static
+packages/api/uploads
