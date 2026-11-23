@@ -31,7 +31,8 @@ const authCors = process.env.AUTH_CORS || [...new Set([storeCors, backendUrl])].
 
 // A database on this Mac or in Docker runs without SSL. Any other one (Neon) only accepts
 // encrypted connections, so SSL is switched on even when its link lacks "?sslmode=require".
-const databaseUrl = process.env.DATABASE_URL
+// A link pasted without the "?" before its options (".../neondbsslmode=require") is repaired too.
+const databaseUrl = process.env.DATABASE_URL?.replace(/\/([^/?]+?)(sslmode=)/i, '/$1?$2')
 const localDatabase = !databaseUrl || /@(localhost|127\.0\.0\.1|postgres)(:|\/|\?|$)|sslmode=disable/i.test(databaseUrl)
 
 /* ---------- optional production services (all switched on by environment variables) ---------- */
