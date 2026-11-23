@@ -27,6 +27,13 @@ const adminCors = process.env.ADMIN_CORS || backendUrl
 const vendorCors = process.env.VENDOR_CORS || backendUrl
 const authCors = process.env.AUTH_CORS || [...new Set([storeCors, backendUrl])].join(',')
 
+/* ---------- database ---------- */
+
+// A database on this Mac or in Docker runs without SSL. Any other one (Neon) only accepts
+// encrypted connections, so SSL is switched on even when its link lacks "?sslmode=require".
+const databaseUrl = process.env.DATABASE_URL
+const localDatabase = !databaseUrl || /@(localhost|127\.0\.0\.1|postgres)(:|\/|\?|$)|sslmode=disable/i.test(databaseUrl)
+
 /* ---------- optional production services (all switched on by environment variables) ---------- */
 
 // Redis: shared events, workflows and locks. Without REDIS_URL everything runs in memory,
@@ -73,7 +80,8 @@ const fileProvider = process.env.S3_BUCKET
 
 module.exports = withMercur({
   projectConfig: {
-    databaseUrl: process.env.DATABASE_URL,
+    databaseUrl,
+    ...(localDatabase ? {} : { databaseDriverOptions: { connection: { ssl: { rejectUnauthorized: false } } } }),
     redisUrl,
     workerMode: (process.env.MEDUSA_WORKER_MODE as 'shared' | 'worker' | 'server') || 'shared',
     http: {
