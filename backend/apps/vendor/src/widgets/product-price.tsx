@@ -115,7 +115,8 @@ export default function ProductPriceWidget({ data }: { data?: unknown }) {
                   {pieces(o.stock)}
                 </Text>
               </div>
-              <Link to={`/offers/${o.id}`} className="text-ui-fg-interactive txt-compact-small hover:underline">
+              {/* Mercur's offer page is keyed by product: /offers/:productId (Edit prices / Edit stock levels) */}
+              <Link to={`/offers/${id}`} className="text-ui-fg-interactive txt-compact-small hover:underline">
                 Change
               </Link>
             </div>
